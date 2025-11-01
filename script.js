@@ -39,7 +39,7 @@ const dialog = [
       typeText("main minigames dulu ga siih, gas di sini broww!👇");
       index++;
     } else {
-      window.location.href = "Tictactoe.html";
+      window.location.href = "tictactoe.html";
     }
   }
 
