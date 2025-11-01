@@ -1,0 +1,41 @@
+body {
+      font-family: Courier New;
+      background-color: #e1b7f0;
+      text-align: center;
+      padding-top: 50px;
+    }
+    #dialog-box {
+      display: inline-block;
+      position: fixed;
+      top: 40%;
+      right: 10%;
+      padding: 20px;
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 300px;
+    }
+    
+    #dialog-text {
+    	font-size: 15px;
+    	font-weight: bold;
+    }
+    
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background: #d077f0;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: gray;
+      cursor: not-allowed;
+}
+
+
+
+

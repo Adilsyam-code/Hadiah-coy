@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tic Tac Toe vs Komputer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #b57bec
+    }
+    h1 {
+      margin-top: 30px;
+      font-family: Courier New;
+      color: white;
+          }
+          p {
+          	font-family: Courier New;
+          	color: white;
+          	font-weight: bold;
+          }
+          #game-board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      gap: 5px;
+      justify-content: center;
+      margin: 20px auto;
+    }
+    .cell {
+      width: 100px;
+      height: 100px;
+      background: #fff;
+      border: 2px solid #555;
+      font-size: 2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .cell:hover {
+      background: #892ee1;
+    }
+    #status {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      color: white;
+      font-family: Courier New;
+      font-weight: bold;
+    }
+    #restart {
+      padding: 8px 16px;
+      font-size: 1em;
+      cursor: pointer;
+      background: #8122db;
+      border: none;
+      border-radius: 8px;
+      font-family: Courier New;
+      font-weight: bold;
+      color: #fff;
+    }
+    #restart:hover {
+      background-color: #9439eb;
+    }
+    .a-next {
+    	text-decoration: none;
+      padding: 8px 16px;
+      background: #8122db;
+      font-size: 1em;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      font-family: Courier New;
+      font-weight: bold;
+      color: #fff;
+    }
+    #next:hover {
+      background-color: #9439eb;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tic Tac Toe</h1>
+  <p>haii! Selamat datang di game Tic Tac Toe!! Kamu harus menang biar bisa lanjut😏</p>
+  <div id="game-board">
+    <div class="cell" data-index="0"></div>
+    <div class="cell" data-index="1"></div>
+    <div class="cell" data-index="2"></div>
+    <div class="cell" data-index="3"></div>
+    <div class="cell" data-index="4"></div>
+    <div class="cell" data-index="5"></div>
+    <div class="cell" data-index="6"></div>
+    <div class="cell" data-index="7"></div>
+    <div class="cell" data-index="8"></div>
+  </div>
+  <div id="status">Gas main!</div>
+  <button id="restart">Restart</button>
+  <a href="cocokemoji.html" class="a-next">Next Game!</a>
+
+  <script>
+    const cells = document.querySelectorAll(".cell");
+    const statusText = document.getElementById("status");
+    const restartButton = document.getElementById("restart");
+
+    let board = ["", "", "", "", "", "", "", "", ""];
+    let gameActive = true;
+    const player = "X";
+    const computer = "O";
+
+    const winningConditions = [
+      [0,1,2],[3,4,5],[6,7,8],
+      [0,3,6],[1,4,7],[2,5,8],
+      [0,4,8],[2,4,6]
+    ];
+
+    function checkWinner() {
+      for (let condition of winningConditions) {
+        const [a, b, c] = condition;
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+          gameActive = false;
+          statusText.textContent = `Player (${player}) Win!`;
+          return;
+        }
+      }
+      if (!board.includes("")) {
+        statusText.textContent = "It's a draw!";
+        gameActive = false;
+      }
+    }
+
+    function handlePlayerMove(index) {
+      if (board[index] || !gameActive) return;
+
+      board[index] = player;
+      cells[index].textContent = player;
+      checkWinner();
+
+      if (gameActive) {
+        statusText.textContent = `Komputer (${computer}) thinking...`;
+        setTimeout(handleComputerMove, 500); // delay biar terasa alami
+      }
+    }
+
+    function handleComputerMove() {
+      // Cari sel kosong
+      const emptyIndices = board.map((val, idx) => val === "" ? idx : null).filter(v => v !== null);
+      if (emptyIndices.length === 0 || !gameActive) return;
+
+      // Pilih random sel kosong
+      const randomIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+      board[randomIndex] = computer;
+      cells[randomIndex].textContent = computer;
+
+      checkWinner();
+
+      if (gameActive) {
+        statusText.textContent = `Your turn`;
+      }
+    }
+
+    function restartGame() {
+      board = ["", "", "", "", "", "", "", "", ""];
+      cells.forEach(cell => cell.textContent = "");
+      gameActive = true;
+      statusText.textContent = `Player ${player}'s turn`;
+    }
+
+    cells.forEach((cell, i) => {
+      cell.addEventListener("click", () => handlePlayerMove(i));
+    });
+
+    restartButton.addEventListener("click", restartGame);
+    
+  </script>
+</body>
+</html>
